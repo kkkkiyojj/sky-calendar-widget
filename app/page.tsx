@@ -1,4 +1,4 @@
-import MiniCalendarWidget from "@/components/MiniCalendarWidget";
+import MiniCalendarWidget from "../components/MiniCalendarWidget";
 
 export default function Home() {
   return (
