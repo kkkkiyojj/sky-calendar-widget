@@ -1,74 +1,74 @@
 "use client";
 
 type Props = {
-  /** 테스트/고정표시용. 안 주면 오늘 날짜. */
-  date?: Date;
-  /** 카드 가로/세로(px). 기본: 156x156 (작고 컴팩트) */
-  size?: number;
+  date?: Date;          // 안 주면 오늘
+  cardSize?: number;    // 카드 한 장 크기(px)
+  gap?: number;         // 카드 사이 간격(px)
 };
 
-function pad2(n: number) {
-  return String(n).padStart(2, "0");
-}
+const pad2 = (n: number) => String(n).padStart(2, "0");
 
-export default function MiniCalendarWidget({ date, size = 156 }: Props) {
+export default function MiniCalendarWidget({
+  date,
+  cardSize = 104,
+  gap = 10
+}: Props) {
   const d = date ?? new Date();
-
   const month = pad2(d.getMonth() + 1);
   const day = pad2(d.getDate());
-
-  const weekday = d.toLocaleDateString("en-US", { weekday: "long" }); // Monday...
-  // 위젯이라 깔끔하게 3~4글자 축약 원하면 아래로 교체:
-  // const weekday = d.toLocaleDateString("en-US", { weekday: "short" }); // Mon...
+  const weekday = d.toLocaleDateString("en-US", { weekday: "long" }).toUpperCase();
 
   return (
-    <div
-      style={{ width: size, height: size }}
-      className="
-        relative overflow-hidden rounded-2xl
-        border border-white/60
-        bg-white/22
-        backdrop-blur-md
-        shadow-[0_10px_30px_rgba(30,80,140,0.18)]
-      "
-    >
-      {/* sky gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-sky-200 to-blue-200" />
-
-      {/* subtle highlight */}
-      <div className="absolute -top-16 -left-16 h-40 w-40 rounded-full bg-white/35 blur-2xl" />
-      <div className="absolute -bottom-20 -right-20 h-48 w-48 rounded-full bg-white/25 blur-2xl" />
-
-      {/* content */}
-      <div className="relative h-full w-full p-3">
-        <div className="grid h-full grid-cols-2 gap-2">
-          {/* MONTH */}
-          <div className="flex flex-col items-start justify-center">
-            <div className="text-[10px] tracking-[0.25em] text-slate-700/75">
-              MONTH
-            </div>
-            <div className="mt-1 text-4xl font-semibold leading-none text-slate-900/90">
-              {month}
-            </div>
-          </div>
-
-          {/* DAY */}
-          <div className="flex flex-col items-start justify-center">
-            <div className="text-[10px] tracking-[0.25em] text-slate-700/75">
-              DAY
-            </div>
-            <div className="mt-1 text-4xl font-semibold leading-none text-slate-900/90">
-              {day}
-            </div>
-            <div className="mt-1 text-[12px] font-medium tracking-wide text-slate-700/85">
-              {weekday}
-            </div>
-          </div>
-        </div>
+    <div className="inline-flex flex-col items-center">
+      <div className="inline-flex" style={{ gap }}>
+        <SoftCard label="MONTH" value={month} size={cardSize} />
+        <SoftCard label="DAY" value={day} size={cardSize} />
       </div>
 
-      {/* blurred border feel */}
-      <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-white/40" />
+      <div
+        className="mt-2 text-[11px] font-medium tracking-[0.22em] text-slate-600/80"
+        aria-label="weekday"
+      >
+        {weekday}
+      </div>
+    </div>
+  );
+}
+
+function SoftCard({
+  label,
+  value,
+  size
+}: {
+  label: "MONTH" | "DAY";
+  value: string;
+  size: number;
+}) {
+  return (
+    <div
+      className="
+        relative overflow-hidden rounded-[18px]
+        bg-[#eaf3fb]
+        shadow-[0_10px_24px_rgba(120,160,200,0.18)]
+      "
+      style={{ width: size, height: size }}
+    >
+      {/* 말랑한 테두리(인셋) */}
+      <div className="pointer-events-none absolute inset-0 rounded-[18px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.65)]" />
+
+      {/* 살짝 밝은 헤이즈 */}
+      <div className="pointer-events-none absolute -top-8 -left-10 h-24 w-24 rounded-full bg-white/55 blur-xl" />
+      <div className="pointer-events-none absolute -bottom-10 -right-10 h-28 w-28 rounded-full bg-white/35 blur-xl" />
+
+      <div className="relative h-full w-full px-3 py-2">
+        <div className="text-[10px] font-semibold tracking-[0.28em] text-slate-600/70">
+          {label}
+        </div>
+
+        <div className="mt-2 text-[46px] font-semibold leading-none text-slate-700/85">
+          {value}
+        </div>
+      </div>
     </div>
   );
 }
