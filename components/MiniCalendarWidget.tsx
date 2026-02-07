@@ -24,7 +24,7 @@ export default function MiniCalendarWidget({
 
   return (
     <div
-      style={{ width, height, padding }}
+     style={{ width, height, padding, transform: "translateX(1px)" }}
       className="
         relative overflow-hidden rounded-[22px]
         bg-[#eaf5ff]
