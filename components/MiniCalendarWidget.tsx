@@ -12,10 +12,10 @@ const pad2 = (n: number) => String(n).padStart(2, "0");
 
 export default function MiniCalendarWidget({
   date,
-  width = 260,
-  height = 142,
-  padding = 12,
-  gap = 10
+  width = 270,
+  height = 150,
+  padding = 14,
+  gap = 12
 }: Props) {
   const d = date ?? new Date();
   const month = pad2(d.getMonth() + 1);
