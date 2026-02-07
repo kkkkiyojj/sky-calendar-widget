@@ -24,22 +24,19 @@ export default function MiniCalendarWidget({
     <div
       className="
         relative overflow-hidden rounded-[18px]
-        bg-[#cfe4f6]
-        shadow-[0_14px_30px_rgba(130,160,190,0.22)]
+        bg-[#e8f3ff]
+        shadow-[0_14px_30px_rgba(130,160,190,0.18)]
       "
       style={{ width, height }}
     >
       {/* 바깥 테두리/뽀얀 느낌 */}
-      <div className="pointer-events-none absolute inset-0 rounded-[18px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.45)]" />
-      <div className="pointer-events-none absolute -top-10 -left-14 h-32 w-32 rounded-full bg-white/20 blur-2xl" />
-      <div className="pointer-events-none absolute -bottom-12 -right-16 h-36 w-36 rounded-full bg-white/18 blur-2xl" />
+      <div className="pointer-events-none absolute inset-0 rounded-[18px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.55)]" />
+      <div className="pointer-events-none absolute -top-10 -left-14 h-32 w-32 rounded-full bg-white/28 blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-12 -right-16 h-36 w-36 rounded-full bg-white/22 blur-2xl" />
 
       <div className="relative h-full w-full p-[10px]">
         <div className="flex h-full" style={{ gap }}>
-          {/* MONTH 카드 */}
           <InnerCard label="MONTH" main={month} />
-
-          {/* DAY 카드 + 요일 */}
           <InnerCard label="DAY" main={day} footer={weekday} />
         </div>
       </div>
@@ -60,29 +57,35 @@ function InnerCard({
     <div
       className="
         relative flex-1 overflow-hidden rounded-[14px]
-        bg-white/18
+        bg-[#bcd9f3]/55
       "
     >
       {/* 카드 테두리(아주 은은) */}
-      <div className="pointer-events-none absolute inset-0 rounded-[14px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.25)]" />
+      <div className="pointer-events-none absolute inset-0 rounded-[14px] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.28)]" />
       {/* 카드 안쪽 하이라이트 */}
       <div className="pointer-events-none absolute -top-8 -left-10 h-24 w-24 rounded-full bg-white/18 blur-xl" />
 
-      <div className="relative h-full w-full px-3 pt-2 pb-2 flex flex-col">
-        <div className="text-[10px] font-semibold tracking-[0.26em] text-white/70">
+      {/* 레이아웃: 위 라벨 / 가운데 숫자 / 아래 요일 */}
+      <div className="relative h-full w-full px-3 py-2 flex flex-col">
+        {/* 상단 라벨 */}
+        <div className="text-[10px] font-semibold tracking-[0.26em] text-white/75">
           {label}
         </div>
 
-        <div className="mt-1 text-[54px] font-semibold leading-none text-white">
-          {main}
+        {/* 가운데 숫자 (완전 중앙) */}
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-[54px] font-semibold leading-none text-white">
+            {main}
+          </div>
         </div>
 
+        {/* 하단 요일 (DAY 카드만) */}
         {footer ? (
-          <div className="mt-auto text-[10px] font-semibold tracking-[0.22em] text-white/75">
+          <div className="text-[10px] font-semibold tracking-[0.22em] text-white/75 text-right">
             {footer}
           </div>
         ) : (
-          <div className="mt-auto" />
+          <div className="h-[14px]" />
         )}
       </div>
     </div>
